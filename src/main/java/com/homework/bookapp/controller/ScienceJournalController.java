@@ -1,18 +1,14 @@
 package com.homework.bookapp.controller;
 
-import com.homework.bookapp.model.Book;
-import com.homework.bookapp.model.BookDTO;
 import com.homework.bookapp.model.ScienceJournal;
 import com.homework.bookapp.model.ScienceJournalDTO;
-import com.homework.bookapp.service.BookService;
 import com.homework.bookapp.service.ScienceJournalService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+
 
 
 @RequestMapping(value = "/journal")

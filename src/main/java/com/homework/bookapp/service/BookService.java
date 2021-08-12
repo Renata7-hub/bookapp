@@ -55,7 +55,8 @@ public class BookService {
     }
 
     public String getBooksTotalPriceByBarcode(String barcode) {
-        BigDecimal totalPrice = null;
+    BigDecimal totalPrice = null;
+        //double totalPrice;
         Book book = bookRepository.findBookByBarcode(barcode);
       /*       if (book.getScienceIndex != null || book.getScienceIndex.isEmpty ) {
              totalPrice = new BigDecimal(book.getPricePerUnit() * book.getQuantity()*book.getScienceIndex());
@@ -67,7 +68,10 @@ public class BookService {
          } else {
         */
         totalPrice = new BigDecimal(book.getPricePerUnit() * book.getQuantity());
-        return "Total price = " + totalPrice + ", when barcode = " + barcode;
+        double totalPriceD= totalPrice.doubleValue();
+        double totalPriceRound = Math.round(totalPriceD*100.0) / 100.0;
+       //totalPrice = Math.round(new BigDecimal(book.getPricePerUnit() * book.getQuantity()).doubleValue()*100.0)/100.0;
+        return "Total price = " + totalPriceRound + ", when barcode = " + barcode;
     }
 
     public Map<String, Integer> getAllBooksBarcodesByQuantity() {
