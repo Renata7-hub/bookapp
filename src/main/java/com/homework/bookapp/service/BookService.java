@@ -40,7 +40,7 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-     public Book updateBookByBarcode(String barcode, BookDTO bookDTO) {
+    public Book updateBookByBarcode(String barcode, BookDTO bookDTO) {
         Book updatedBook = bookRepository.findBookByBarcode(barcode);
         updatedBook.setTitle(bookDTO.getTitle());
         updatedBook.setAuthor(bookDTO.getAuthor());
@@ -55,8 +55,8 @@ public class BookService {
     }
 
     public String getBooksTotalPriceByBarcode(String barcode) {
-         BigDecimal totalPrice = null;
-         Book book = bookRepository.findBookByBarcode(barcode);
+        BigDecimal totalPrice = null;
+        Book book = bookRepository.findBookByBarcode(barcode);
       /*       if (book.getScienceIndex != null || book.getScienceIndex.isEmpty ) {
              totalPrice = new BigDecimal(book.getPricePerUnit() * book.getQuantity()*book.getScienceIndex());
          } else if (book.getReleaseYear != null || book.getScienceIndex.isEmpty) {
@@ -65,24 +65,14 @@ public class BookService {
              totalPrice = new BigDecimal(book.getPricePerUnit() * book.getQuantity()
              * (currentYear-book.getReleaseYear)/3);
          } else {
-        */ totalPrice = new BigDecimal(book.getPricePerUnit() * book.getQuantity());
-    //}
-         return "Total price = " + totalPrice + ", when barcode = " + barcode;
+        */
+        totalPrice = new BigDecimal(book.getPricePerUnit() * book.getQuantity());
+        return "Total price = " + totalPrice + ", when barcode = " + barcode;
     }
 
-    public  Map<String, Integer> getAllBooksBarcodesByQuantity() {
-        List<Book> allBooks = bookRepository.findAll();
-        Map<String, Integer> barcodesAndQuantities = new HashMap<>();
-        for (Book book : allBooks) {
-            String barcode = book.getBarcode();
-            Integer quantity = book.getQuantity();
-            barcodesAndQuantities.put(barcode, quantity);
-        }
-      Map<String,Integer> sortedByQuantity =
-                barcodesAndQuantities.entrySet().stream()
-                      .sorted(Map.Entry.comparingByValue())
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                                (e1, e2) -> e1, LinkedHashMap::new));
-        return sortedByQuantity;
+    public Map<String, Integer> getAllBooksBarcodesByQuantity() {
+        return bookRepository.findAll().stream()
+                .sorted(Comparator.comparing(Book::getQuantity))
+                .collect(Collectors.toMap(Book::getBarcode, Book::getQuantity, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }

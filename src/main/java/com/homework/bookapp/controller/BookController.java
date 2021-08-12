@@ -21,11 +21,13 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book>  bookRegistration(@RequestBody BookDTO bookDTO) {
-        return new ResponseEntity(bookService.bookRegistration(bookDTO), HttpStatus.CREATED);
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Book bookRegistration(@RequestBody BookDTO bookDTO) {
+        return bookService.bookRegistration(bookDTO);
     }
 
     @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
@@ -58,5 +60,4 @@ public class BookController {
     public Map<String, Integer> getBooksByQuantity() {
         return bookService.getAllBooksBarcodesByQuantity();
     }
-
 }
